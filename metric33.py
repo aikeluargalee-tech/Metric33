@@ -93,7 +93,7 @@ def _fetch_fklines_or_okx(now_ms: int) -> list[list[Any]]:
     except Exception:
         tv = get_json(
             "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract"
-            "?instId=BTC-USDT-SWAP&period=1D&unit=1&limit=35"
+            "?instId=BTC-USDT-SWAP&period=1D&unit=0&limit=35"
         ).get("data") or []
         # OKX returns newest first: [ts, sellVolBtc, buyVolBtc]
         out = []
