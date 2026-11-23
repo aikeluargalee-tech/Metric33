@@ -120,6 +120,41 @@ class TestMetric33(unittest.TestCase):
         self.assertEqual(len(bands), 2)
         self.assertGreater(int(bands[1]["low"]), int(bands[0]["high"]))
 
+    def test_row18_multiplies_raw_cmc_decimal_by_100(self) -> None:
+        raw = {
+            "now_ms": self.now_ms,
+            "cmc_funding_overall": {"data": {"avgFundingRate": 0.0000364, "avgFundingRate24hAgo": -0.0000125}},
+        }
+        snap = metric33.build_snapshot(raw, self.now)
+        row18 = snap["rows"][17]
+        self.assertIn("+0.0036%", row18)
+        self.assertIn("-0.0012%", row18)
+        self.assertNotIn("+0.0000%", row18)
+
+    def test_fapi_failure_never_disguises_okx_as_binance(self) -> None:
+        d1 = [_make_kline(self.now_ms - (40 - i) * 86_400_000, 60_000, 61_000, 59_000, 60_000) for i in range(35)]
+        raw = {
+            "now_ms": self.now_ms,
+            "klines_1d": d1,
+            "funding_binance": None,
+            "oi_1h": None,
+            "fklines_1d": {"rows": d1, "source": "okx_fallback"},
+            "top_ratio": {"rows": [{"longShortRatio": "1.75", "longAccount": "0.636"}], "source": "okx_fallback"},
+            "oi_4h": {
+                "rows": [{"sumOpenInterest": str(30_000 + i * 50)} for i in range(12)],
+                "source": "okx_fallback",
+            },
+        }
+        snap = metric33.build_snapshot(raw, self.now)
+        rows = snap["rows"]
+        self.assertEqual(rows[16], "17  funding 8h, Binance  UNAVAILABLE")
+        self.assertEqual(rows[19], "20  OI Binance  UNAVAILABLE")
+        self.assertIn("(OKX fallback)", rows[23])
+        self.assertNotIn("BINANCE ONLY", rows[23])
+        self.assertIn("(OKX fallback)", rows[26])
+        self.assertIn("(OKX fallback)", rows[32])
+
+
 
 if __name__ == "__main__":
     unittest.main()

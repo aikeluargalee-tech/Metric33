@@ -34,7 +34,7 @@ python test_metric33.py
 | **2** | `closed 1D close` | Last closed 1D bar close from Binance Spot |
 | **3** | `bands containing price` | 4H fractal (`k=2`) pivot clusters (`width = 0.35 * Wilder ATR1D`), non-overlapping integer edges, confluence-scored with 1H pivots, POC, VAH/VAL, VWAP30, and round-1k levels |
 | **4** | `next levels` | Nearest support band below and resistance band above current spot price |
-| **5** | `ATR 1D/4H/1H` | 14-bar simple Average True Range across closed `1D`, `4H`, and `1H` Binance Spot klines |
+| **5** | `ATR 1D/4H/1H` | 14-bar Wilder Average True Range across closed `1D`, `4H`, and `1H` Binance Spot klines |
 | **6** | `ATR 1D percentile` | 120-day rolling percentile of Wilder `ATR(14)` + current `ATR 1D` as `%` of closed 1D price |
 | **7** | `volume profile 30d` | 30-day 60-bin quote-volume histogram on closed `1D` bars (reports 2 POCs when bimodal with >=12% bin separation and >=20% valley depth) |
 | **8** | `VWAP 30d` | 30-day Volume-Weighted Average Price (`typical price = (H+L+C)/3`) |

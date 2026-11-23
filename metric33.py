@@ -86,71 +86,68 @@ def get_spot_json(path: str) -> Any:
     raise last_exc or RuntimeError(f"spot fetch failed for {path}")
 
 
-def _fetch_fklines_or_okx(now_ms: int) -> list[list[Any]]:
-    """Fetch 1D futures klines from Binance fapi, falling back to OKX BTC-USDT-SWAP taker volume on US HTTP 451."""
+def _fetch_fklines_with_source(now_ms: int) -> dict[str, Any] | None:
+    """Fetch 1D futures klines from Binance fapi, or fall back to OKX BTC-USDT-SWAP with an explicit source tag."""
     try:
-        return get_json("https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1d&limit=60")
+        rows = get_json("https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1d&limit=60")
+        return {"rows": rows, "source": "binance"}
     except Exception:
         tv = get_json(
             "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract"
             "?instId=BTC-USDT-SWAP&period=1D&unit=0&limit=35"
         ).get("data") or []
-        # OKX returns newest first: [ts, sellVolBtc, buyVolBtc]
+        if not tv:
+            return None
         out = []
         for r in reversed(tv):
             ts = int(r[0])
             sell_v, buy_v = float(r[1]), float(r[2])
             tot_v = sell_v + buy_v
             out.append([ts, "0", "0", "0", "0", str(tot_v), ts + 86_399_000, "0", 0, str(buy_v), "0", "0"])
-        return out
+        return {"rows": out, "source": "okx_fallback"}
 
 
-def _fetch_oi_4h_or_okx() -> list[dict[str, Any]]:
+def _fetch_oi_4h_with_source() -> dict[str, Any] | None:
     try:
-        return get_json("https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=4h&limit=12")
+        rows = get_json("https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=4h&limit=12")
+        return {"rows": rows, "source": "binance"}
     except Exception:
         rows = get_json(
             "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history"
             "?instId=BTC-USDT-SWAP&period=4H&limit=12"
         ).get("data") or []
-        return [{"sumOpenInterest": str(r[2]), "sumOpenInterestValue": str(r[3])} for r in reversed(rows)]
-
-
-def _fetch_oi_1h_or_okx() -> list[dict[str, Any]]:
-    try:
-        return get_json("https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=1h&limit=1")
-    except Exception:
-        rows = get_json(
-            "https://www.okx.com/api/v5/public/open-interest?instType=SWAP&instId=BTC-USDT-SWAP"
-        ).get("data") or []
         if not rows:
-            return []
-        return [{"sumOpenInterest": str(rows[0].get("oiCcy")), "sumOpenInterestValue": str(rows[0].get("oiUsd"))}]
+            return None
+        mapped = [{"sumOpenInterest": str(r[2]), "sumOpenInterestValue": str(r[3])} for r in reversed(rows)]
+        return {"rows": mapped, "source": "okx_fallback"}
 
 
-def _fetch_top_ratio_or_okx() -> list[dict[str, Any]]:
+def _fetch_oi_1h_binance_only() -> list[dict[str, Any]]:
+    """Row 20 is explicitly 'OI Binance': never substitute another exchange's book under Binance's name."""
+    return get_json("https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=1h&limit=1")
+
+
+def _fetch_top_ratio_with_source() -> dict[str, Any] | None:
     try:
-        return get_json(
+        rows = get_json(
             "https://fapi.binance.com/futures/data/topLongShortPositionRatio?symbol=BTCUSDT&period=1d&limit=1"
         )
+        return {"rows": rows, "source": "binance"}
     except Exception:
         rows = get_json(
             "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract-top-trader"
             "?instId=BTC-USDT-SWAP&period=1D"
         ).get("data") or []
         if not rows:
-            return []
+            return None
         r_top = float(rows[0][1])
         long_acc = r_top / (1.0 + r_top) if r_top > 0 else 0.5
-        return [{"longShortRatio": str(r_top), "longAccount": str(long_acc)}]
+        return {"rows": [{"longShortRatio": str(r_top), "longAccount": str(long_acc)}], "source": "okx_fallback"}
 
 
-def _fetch_funding_binance_or_okx() -> float | None:
-    try:
-        return _float(get_json("https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT")["lastFundingRate"])
-    except Exception:
-        rows = get_json("https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP").get("data") or []
-        return _float(rows[0].get("fundingRate")) if rows else None
+def _fetch_funding_binance_only() -> float | None:
+    """Row 17 is explicitly 'funding 8h, Binance': return None if Binance fapi is unreachable."""
+    return _float(get_json("https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT")["lastFundingRate"])
 
 
 def fetch_all_sources(now: dt.datetime | None = None) -> dict[str, Any]:
@@ -173,12 +170,12 @@ def fetch_all_sources(now: dt.datetime | None = None) -> dict[str, Any]:
         "klines_1d": lambda: get_spot_json("/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=400"),
         "klines_4h": lambda: get_spot_json("/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=500"),
         "klines_1h": lambda: get_spot_json("/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=500"),
-        "fklines_1d": lambda: _fetch_fklines_or_okx(now_ms),
-        # Binance Futures funding, OI history, top trader long/short ratio (with US runner OKX fallback)
-        "funding_binance": _fetch_funding_binance_or_okx,
-        "oi_4h": _fetch_oi_4h_or_okx,
-        "oi_1h": _fetch_oi_1h_or_okx,
-        "top_ratio": _fetch_top_ratio_or_okx,
+        "fklines_1d": lambda: _fetch_fklines_with_source(now_ms),
+        # Binance Futures funding, OI history, top trader long/short ratio
+        "funding_binance": _fetch_funding_binance_only,
+        "oi_4h": _fetch_oi_4h_with_source,
+        "oi_1h": _fetch_oi_1h_binance_only,
+        "top_ratio": _fetch_top_ratio_with_source,
         # Direct multi-venue funding & OI (Bybit, OKX, Deribit)
         "bybit_ticker": lambda: get_json("https://api.bybit.com/v5/market/tickers?category=linear&symbol=BTCUSDT"),
         "okx_funding": lambda: get_json("https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP"),
@@ -676,7 +673,14 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
     d1 = closed_klines(raw.get("klines_1d"), now_ms)
     h4 = closed_klines(raw.get("klines_4h"), now_ms)
     h1 = closed_klines(raw.get("klines_1h"), now_ms)
-    f1d = closed_klines(raw.get("fklines_1d"), now_ms)
+
+    fk_obj = raw.get("fklines_1d")
+    if isinstance(fk_obj, dict):
+        f1d = closed_klines(fk_obj.get("rows"), now_ms)
+        f1d_source = fk_obj.get("source", "binance")
+    else:
+        f1d = closed_klines(fk_obj, now_ms)
+        f1d_source = "binance"
 
     px_bn = _float(raw.get("px_binance"))
     px_cb = _float(raw.get("px_coinbase"))
@@ -688,10 +692,10 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
     sma200 = sum(float(b["c"]) for b in d1[-200:]) / 200.0 if len(d1) >= 200 else None
     sma30 = sum(float(b["c"]) for b in d1[-30:]) / 30.0 if len(d1) >= 30 else None
 
-    # ATRs & percentile
-    atr1d = safe_call(lambda: atr_simple(d1, 14))
-    atr4h = safe_call(lambda: atr_simple(h4, 14))
-    atr1h = safe_call(lambda: atr_simple(h1, 14))
+    # ATRs & percentile (Wilder ATR across Row 5 and Row 6 for full internal consistency)
+    atr1d = safe_call(lambda: atr_wilder(d1[-299:], 14))
+    atr4h = safe_call(lambda: atr_wilder(h4, 14))
+    atr1h = safe_call(lambda: atr_wilder(h1, 14))
     apct = safe_call(lambda: atr_percentile_120d(d1[-299:], 14, 120))
 
     # Volume profile 30d & VWAP 30d
@@ -807,7 +811,13 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
     etf_d20 = sum(etf_vals[-20:]) if len(etf_vals) >= 20 else None
 
     # Top trader ratio
-    tr_rows = raw.get("top_ratio") or []
+    tr_obj = raw.get("top_ratio")
+    if isinstance(tr_obj, dict):
+        tr_rows = tr_obj.get("rows") or []
+        tr_source = tr_obj.get("source", "binance")
+    else:
+        tr_rows = tr_obj or []
+        tr_source = "binance"
     ls_ratio = _float(tr_rows[-1].get("longShortRatio")) if tr_rows else None
     ls_long_pct = (
         float(tr_rows[-1]["longAccount"]) * 100.0
@@ -837,7 +847,13 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
     taker_ratio = (float(last_1d["tb"]) / float(last_1d["v"])) if (last_1d and float(last_1d["v"]) > 0) else None
     taker_net = (2.0 * float(last_1d["tb"]) - float(last_1d["v"])) if last_1d else None
 
-    oi_4h_rows = raw.get("oi_4h") or []
+    oi_4h_obj = raw.get("oi_4h")
+    if isinstance(oi_4h_obj, dict):
+        oi_4h_rows = oi_4h_obj.get("rows") or []
+        oi_4h_source = oi_4h_obj.get("source", "binance")
+    else:
+        oi_4h_rows = oi_4h_obj or []
+        oi_4h_source = "binance"
     oi_4h_chg = oi_4h_pct = oi_24h_chg = None
     if len(oi_4h_rows) >= 2:
         last_oi = _float(oi_4h_rows[-1].get("sumOpenInterest"))
@@ -937,11 +953,11 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
     else:
         lines.append(f"17  funding 8h, Binance  {f_bn * 100.0:+.4f}% ({f_bn * 100.0 * 3.0 * 365.0:+.2f}%/yr)")
 
-    # 18 funding, market avg
+    # 18 funding, market avg (CMC avgFundingRate is a raw decimal like 0.0000364; multiply by 100 for %)
     if f_avg is None or f_avg_24h is None:
         lines.append(f"18  funding, market avg  {UNAVAILABLE}")
     else:
-        lines.append(f"18  funding, market avg  {f_avg:+.4f}% (24h ago {f_avg_24h:+.4f}%)")
+        lines.append(f"18  funding, market avg  {f_avg * 100.0:+.4f}% (24h ago {f_avg_24h * 100.0:+.4f}%)")
 
     # 19 funding per venue
     if venue_rates:
@@ -989,7 +1005,10 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
     )
 
     # 24 CVD 30d
-    lines.append(f"24  CVD 30d  spot {_int(cvd_spot)} · futures {_int(cvd_fut)} BTC (BINANCE ONLY)")
+    if f1d_source == "okx_fallback":
+        lines.append(f"24  CVD 30d  spot {_int(cvd_spot)} (BINANCE) · futures {_int(cvd_fut)} BTC (OKX fallback)")
+    else:
+        lines.append(f"24  CVD 30d  spot {_int(cvd_spot)} · futures {_int(cvd_fut)} BTC (BINANCE ONLY)")
 
     # 25 ETF netflow
     if None in (etf_d1, etf_d5, etf_d20):
@@ -1010,7 +1029,8 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
 
     # 27 top traders
     if ls_ratio is not None and ls_long_pct is not None:
-        lines.append(f"27  top traders  L/S {_num(ls_ratio, 2)} ({_num(ls_long_pct, 1)}% long, accounts)")
+        tr_tag = " (OKX fallback)" if tr_source == "okx_fallback" else ""
+        lines.append(f"27  top traders  L/S {_num(ls_ratio, 2)} ({_num(ls_long_pct, 1)}% long, accounts){tr_tag}")
     else:
         lines.append(f"27  top traders  {UNAVAILABLE}")
 
@@ -1051,8 +1071,9 @@ def build_snapshot(raw: dict[str, Any], now: dt.datetime | None = None) -> dict[
         lines.append(f"33  4H OI change  {UNAVAILABLE}")
     else:
         d24_s = _signed_int(oi_24h_chg) if oi_24h_chg is not None else UNAVAILABLE
+        oi_tag = " (OKX fallback)" if oi_4h_source == "okx_fallback" else ""
         lines.append(
-            f"33  4H OI change  {_signed_int(oi_4h_chg)} BTC ({_signed_num(oi_4h_pct, 2)}%) · 24h {d24_s} BTC"
+            f"33  4H OI change  {_signed_int(oi_4h_chg)} BTC ({_signed_num(oi_4h_pct, 2)}%) · 24h {d24_s} BTC{oi_tag}"
         )
 
     header = f"BTC spot · {now.strftime('%Y-%m-%d %H:%M:%SZ')} · Metric33 standalone live snapshot"
