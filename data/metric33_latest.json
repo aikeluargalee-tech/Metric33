@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-11-23T16:12:24Z",
-  "header": "BTC spot \u00b7 2026-11-23 16:12:24Z \u00b7 Metric33 standalone live snapshot",
+  "generated_at_utc": "2026-11-23T16:12:53Z",
+  "header": "BTC spot \u00b7 2026-11-23 16:12:53Z \u00b7 Metric33 standalone live snapshot",
   "rows": [
-    " 1  price, 3 venues  Binance 62879.8 \u00b7 Coinbase 62799.3 \u00b7 OKX 62855.1",
+    " 1  price, 3 venues  Binance 62905.4 \u00b7 Coinbase 62824.6 \u00b7 OKX 62888.4",
     " 2  closed 1D close  61271.08",
     " 3  bands containing price  62809-63664 (conf 5)",
     " 4  next levels  below 61665-62536 (conf 19) \u00b7 above 63665-64519 (conf 19)",
@@ -21,26 +21,26 @@
     "17  funding 8h, Binance  +0.0032% (+3.54%/yr)",
     "18  funding, market avg  +0.0000% (24h ago +0.0000%)",
     "19  funding per venue  3 venues \u00b7 lowest Deribit \u00b7 highest Binance",
-    "20  OI Binance  30,218 BTC ($1.90B)",
+    "20  OI Binance  30,203 BTC ($1.90B)",
     "21  OI BTC venues / all perps  BTC 2-venue $3.8B \u00b7 all-crypto perps $301.0B (-1.66% 24h, CMC)",
     "22  liquidations 24h  $906.9M (longs $424.8M / 47% \u00b7 shorts $482.1M \u00b7 24h +316.6%)",
     "23  liq key levels  24H max pain above 64466 \u00b7 below 61956 \u00b7 1W magnet 59813 \u00b7 1M 70838 \u00b7 52.2% above",
     "24  CVD 30d  spot -1722 \u00b7 futures -42142 BTC (BINANCE ONLY)",
     "25  ETF netflow  1D $-127M \u00b7 5D $-1297M \u00b7 20D $-3668M",
-    "26  Coinbase premium  $-80.56 (-12.81 bps)",
+    "26  Coinbase premium  $-80.89 (-12.86 bps)",
     "27  top traders  L/S 1.76 (63.8% long, accounts)",
     "28  realised vol 30d  46.78% \u00b7 78.1th pct of 1y",
-    "29  implied vol DVOL  47.72% (94.2th pct of 240d)",
-    "30  variance premium  +0.94 vol points",
+    "29  implied vol DVOL  47.70% (94.2th pct of 240d)",
+    "30  variance premium  +0.92 vol points",
     "31  last closed 4H bar  15:59Z  O 61426 H 64603 L 61070 C 62898 \u00b7 vol 12166 BTC",
     "32  taker buy ratio  50.75% of last closed 1D (net +301 BTC, BINANCE SPOT)",
     "33  4H OI change  -394 BTC (-1.29%) \u00b7 24h -1374 BTC"
   ],
   "metrics": {
     "price": {
-      "binance": 62879.82,
-      "coinbase": 62799.26,
-      "okx": 62855.1
+      "binance": 62905.45,
+      "coinbase": 62824.56,
+      "okx": 62888.4
     },
     "close_1d": 61271.08,
     "atr": {
@@ -79,9 +79,9 @@
       "percentile_1y": 78.1
     },
     "implied_dvol": {
-      "pct": 47.72,
+      "pct": 47.7,
       "percentile_240d": 94.2
     },
-    "variance_premium": 0.9361550196404309
+    "variance_premium": 0.9161550196404349
   }
 }
