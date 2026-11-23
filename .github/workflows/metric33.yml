@@ -1,0 +1,53 @@
+name: Metric33 — Hourly & On-Demand Live Snapshot
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metric33-snapshot
+  cancel-in-progress: false
+
+jobs:
+  fetch-metric33:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run offline unit tests
+        run: python test_metric33.py
+
+      - name: Fetch 33 live metrics (Text + JSON)
+        run: |
+          mkdir -p data
+          python metric33.py | tee data/metric33_latest.txt
+          python metric33.py --json > data/metric33_latest.json
+          {
+            echo "## Metric33 Live Snapshot"
+            echo '```text'
+            cat data/metric33_latest.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit and push latest snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/metric33_latest.txt data/metric33_latest.json
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(data): update Metric33 live snapshot [skip ci]"
+          git pull --rebase --autostash origin master
+          git push origin master

@@ -31,6 +31,7 @@ UNAVAILABLE = "UNAVAILABLE"
 
 ALLOWED_HOSTS = (
     "api.binance.com",
+    "data-api.binance.vision",
     "fapi.binance.com",
     "api.exchange.coinbase.com",
     "www.okx.com",
@@ -74,6 +75,84 @@ def _float(v: Any) -> float | None:
         return None
 
 
+def get_spot_json(path: str) -> Any:
+    """Fetch Binance Spot JSON, preferring data-api.binance.vision so US GitHub Actions runners never hit HTTP 451."""
+    last_exc: Exception | None = None
+    for base in ("https://data-api.binance.vision", "https://api.binance.com"):
+        try:
+            return get_json(f"{base}{path}")
+        except Exception as exc:
+            last_exc = exc
+    raise last_exc or RuntimeError(f"spot fetch failed for {path}")
+
+
+def _fetch_fklines_or_okx(now_ms: int) -> list[list[Any]]:
+    """Fetch 1D futures klines from Binance fapi, falling back to OKX BTC-USDT-SWAP taker volume on US HTTP 451."""
+    try:
+        return get_json("https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1d&limit=60")
+    except Exception:
+        tv = get_json(
+            "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract"
+            "?instId=BTC-USDT-SWAP&period=1D&unit=1&limit=35"
+        ).get("data") or []
+        # OKX returns newest first: [ts, sellVolBtc, buyVolBtc]
+        out = []
+        for r in reversed(tv):
+            ts = int(r[0])
+            sell_v, buy_v = float(r[1]), float(r[2])
+            tot_v = sell_v + buy_v
+            out.append([ts, "0", "0", "0", "0", str(tot_v), ts + 86_399_000, "0", 0, str(buy_v), "0", "0"])
+        return out
+
+
+def _fetch_oi_4h_or_okx() -> list[dict[str, Any]]:
+    try:
+        return get_json("https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=4h&limit=12")
+    except Exception:
+        rows = get_json(
+            "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history"
+            "?instId=BTC-USDT-SWAP&period=4H&limit=12"
+        ).get("data") or []
+        return [{"sumOpenInterest": str(r[2]), "sumOpenInterestValue": str(r[3])} for r in reversed(rows)]
+
+
+def _fetch_oi_1h_or_okx() -> list[dict[str, Any]]:
+    try:
+        return get_json("https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=1h&limit=1")
+    except Exception:
+        rows = get_json(
+            "https://www.okx.com/api/v5/public/open-interest?instType=SWAP&instId=BTC-USDT-SWAP"
+        ).get("data") or []
+        if not rows:
+            return []
+        return [{"sumOpenInterest": str(rows[0].get("oiCcy")), "sumOpenInterestValue": str(rows[0].get("oiUsd"))}]
+
+
+def _fetch_top_ratio_or_okx() -> list[dict[str, Any]]:
+    try:
+        return get_json(
+            "https://fapi.binance.com/futures/data/topLongShortPositionRatio?symbol=BTCUSDT&period=1d&limit=1"
+        )
+    except Exception:
+        rows = get_json(
+            "https://www.okx.com/api/v5/rubik/stat/contracts/long-short-account-ratio-contract-top-trader"
+            "?instId=BTC-USDT-SWAP&period=1D"
+        ).get("data") or []
+        if not rows:
+            return []
+        r_top = float(rows[0][1])
+        long_acc = r_top / (1.0 + r_top) if r_top > 0 else 0.5
+        return [{"longShortRatio": str(r_top), "longAccount": str(long_acc)}]
+
+
+def _fetch_funding_binance_or_okx() -> float | None:
+    try:
+        return _float(get_json("https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT")["lastFundingRate"])
+    except Exception:
+        rows = get_json("https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP").get("data") or []
+        return _float(rows[0].get("fundingRate")) if rows else None
+
+
 def fetch_all_sources(now: dt.datetime | None = None) -> dict[str, Any]:
     """Fetch all required public endpoints in parallel."""
     if now is None:
@@ -85,29 +164,21 @@ def fetch_all_sources(now: dt.datetime | None = None) -> dict[str, Any]:
 
     tasks: dict[str, Callable[[], Any]] = {
         # Spot prices (3 venues)
-        "px_binance": lambda: _float(get_json("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT")["price"]),
+        "px_binance": lambda: _float(get_spot_json("/api/v3/ticker/price?symbol=BTCUSDT")["price"]),
         "px_coinbase": lambda: _float(get_json("https://api.exchange.coinbase.com/products/BTC-USD/ticker")["price"]),
         "px_okx": lambda: _float(
             get_json("https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT")["data"][0]["last"]
         ),
         # Spot & Futures klines
-        "klines_1d": lambda: get_json("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=400"),
-        "klines_4h": lambda: get_json("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=500"),
-        "klines_1h": lambda: get_json("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=500"),
-        "fklines_1d": lambda: get_json("https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1d&limit=60"),
-        # Binance Futures funding, OI history, top trader long/short ratio
-        "funding_binance": lambda: _float(
-            get_json("https://fapi.binance.com/fapi/v1/premiumIndex?symbol=BTCUSDT")["lastFundingRate"]
-        ),
-        "oi_4h": lambda: get_json(
-            "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=4h&limit=12"
-        ),
-        "oi_1h": lambda: get_json(
-            "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=1h&limit=1"
-        ),
-        "top_ratio": lambda: get_json(
-            "https://fapi.binance.com/futures/data/topLongShortPositionRatio?symbol=BTCUSDT&period=1d&limit=1"
-        ),
+        "klines_1d": lambda: get_spot_json("/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=400"),
+        "klines_4h": lambda: get_spot_json("/api/v3/klines?symbol=BTCUSDT&interval=4h&limit=500"),
+        "klines_1h": lambda: get_spot_json("/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=500"),
+        "fklines_1d": lambda: _fetch_fklines_or_okx(now_ms),
+        # Binance Futures funding, OI history, top trader long/short ratio (with US runner OKX fallback)
+        "funding_binance": _fetch_funding_binance_or_okx,
+        "oi_4h": _fetch_oi_4h_or_okx,
+        "oi_1h": _fetch_oi_1h_or_okx,
+        "top_ratio": _fetch_top_ratio_or_okx,
         # Direct multi-venue funding & OI (Bybit, OKX, Deribit)
         "bybit_ticker": lambda: get_json("https://api.bybit.com/v5/market/tickers?category=linear&symbol=BTCUSDT"),
         "okx_funding": lambda: get_json("https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP"),
