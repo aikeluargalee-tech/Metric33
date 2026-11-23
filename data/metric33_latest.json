@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-11-23T15:59:54Z",
-  "header": "BTC spot \u00b7 2026-11-23 15:59:54Z \u00b7 Metric33 standalone live snapshot",
+  "generated_at_utc": "2026-11-23T16:06:43Z",
+  "header": "BTC spot \u00b7 2026-11-23 16:06:43Z \u00b7 Metric33 standalone live snapshot",
   "rows": [
-    " 1  price, 3 venues  Binance 62903.0 \u00b7 Coinbase 62834.3 \u00b7 OKX 62906.7",
+    " 1  price, 3 venues  Binance 62746.9 \u00b7 Coinbase 62654.4 \u00b7 OKX 62720.0",
     " 2  closed 1D close  61271.08",
-    " 3  bands containing price  62809-63664 (conf 5)",
-    " 4  next levels  below 61665-62536 (conf 19) \u00b7 above 63665-64519 (conf 19)",
-    " 5  ATR 1D/4H/1H  3256 \u00b7 1384 \u00b7 783",
+    " 3  bands containing price  none (price between bands)",
+    " 4  next levels  below 61665-62536 (conf 19) \u00b7 above 62809-63664 (conf 5)",
+    " 5  ATR 1D/4H/1H  3256 \u00b7 1383 \u00b7 818",
     " 6  ATR 1D percentile  99.2th of 120d \u00b7 5.31% of price",
     " 7  volume profile 30d  POCs 75931 / 64748",
     " 8  VWAP 30d  70221",
@@ -15,38 +15,38 @@
     "11  price vs SMA30  72664 (-15.68%)  (proxy for short-term slope)",
     "12  4H structure  DOWNTREND (EMA50 falling, pivots contracting) \u2014 first crack up",
     "13  4H BOS  down false \u00b7 up true",
-    "14  ADX 1D / 4H  48.9 / 36.7",
-    "15  RSI 14  1D 19.4 \u00b7 4H 51.4",
-    "16  volume  last closed 1D $1.22B vs 9d SMA $1.88B (65%) \u00b7 today-so-far $1.31B (partial)",
-    "17  funding 8h, Binance  +0.0033% (+3.56%/yr)",
+    "14  ADX 1D / 4H  48.9 / 35.7",
+    "15  RSI 14  1D 19.4 \u00b7 4H 59.6",
+    "16  volume  last closed 1D $1.22B vs 9d SMA $1.88B (65%) \u00b7 today-so-far $1.33B (partial)",
+    "17  funding 8h, Binance  +0.0033% (+3.60%/yr)",
     "18  funding, market avg  +0.0000% (24h ago +0.0000%)",
     "19  funding per venue  3 venues \u00b7 lowest Deribit \u00b7 highest Binance",
-    "20  OI Binance  30,638 BTC ($1.92B)",
-    "21  OI BTC venues / all perps  BTC 2-venue $3.8B \u00b7 all-crypto perps $301.1B (-1.65% 24h, CMC)",
-    "22  liquidations 24h  $900.9M (longs $419.8M / 47% \u00b7 shorts $481.0M \u00b7 24h +314.2%)",
-    "23  liq key levels  24H max pain above 64466 \u00b7 below 61956 \u00b7 1W magnet 59813 \u00b7 1M 70838 \u00b7 51.8% above",
-    "24  CVD 30d  spot -1722 \u00b7 futures -55757 BTC (BINANCE ONLY)",
+    "20  OI Binance  30,311 BTC ($1.90B)",
+    "21  OI BTC venues / all perps  BTC 2-venue $3.8B \u00b7 all-crypto perps $301.0B (-1.66% 24h, CMC)",
+    "22  liquidations 24h  $903.6M (longs $422.1M / 47% \u00b7 shorts $481.5M \u00b7 24h +315.4%)",
+    "23  liq key levels  24H max pain above 63988 \u00b7 below 61956 \u00b7 1W magnet 67926 \u00b7 1M 70838 \u00b7 52.6% above",
+    "24  CVD 30d  spot -1722 \u00b7 futures -42142 BTC (BINANCE ONLY)",
     "25  ETF netflow  1D $-127M \u00b7 5D $-1297M \u00b7 20D $-3668M",
-    "26  Coinbase premium  $-68.69 (-10.92 bps)",
-    "27  top traders  L/S 1.75 (63.7% long, accounts)",
+    "26  Coinbase premium  $-92.45 (-14.73 bps)",
+    "27  top traders  L/S 1.75 (63.6% long, accounts)",
     "28  realised vol 30d  46.78% \u00b7 78.1th pct of 1y",
-    "29  implied vol DVOL  47.58% (93.8th pct of 240d)",
-    "30  variance premium  +0.80 vol points",
-    "31  last closed 4H bar  11:59Z  O 61460 H 61941 L 61139 C 61426 \u00b7 vol 2490 BTC",
+    "29  implied vol DVOL  47.70% (94.2th pct of 240d)",
+    "30  variance premium  +0.92 vol points",
+    "31  last closed 4H bar  15:59Z  O 61426 H 64603 L 61070 C 62898 \u00b7 vol 12166 BTC",
     "32  taker buy ratio  50.75% of last closed 1D (net +301 BTC, BINANCE SPOT)",
-    "33  4H OI change  -1003 BTC (-3.17%) \u00b7 24h -1398 BTC"
+    "33  4H OI change  -325 BTC (-1.06%) \u00b7 24h -1305 BTC"
   ],
   "metrics": {
     "price": {
-      "binance": 62903.04,
-      "coinbase": 62834.35,
-      "okx": 62906.7
+      "binance": 62746.89,
+      "coinbase": 62654.44,
+      "okx": 62720.0
     },
     "close_1d": 61271.08,
     "atr": {
       "1d": 3256.5228571428565,
-      "4h": 1384.4528571428568,
-      "1h": 783.971428571428,
+      "4h": 1383.8149999999998,
+      "1h": 818.3757142857139,
       "1d_percentile_120d": 99.2
     },
     "pocs_30d": [
@@ -64,24 +64,24 @@
     },
     "adx": {
       "1d": 48.93338816191003,
-      "4h": 36.686193174021746
+      "4h": 35.66332776096273
     },
     "rsi14": {
       "1d": 19.444929432707738,
-      "4h": 51.438989262380105
+      "4h": 59.63573676859187
     },
     "cvd_30d": {
       "spot_btc": -1721.2970500000047,
-      "futures_btc": -55756.67570000006
+      "futures_btc": -42141.68050000006
     },
     "realised_vol_30d": {
       "pct": 46.78384498035957,
       "percentile_1y": 78.1
     },
     "implied_dvol": {
-      "pct": 47.58,
-      "percentile_240d": 93.8
+      "pct": 47.7,
+      "percentile_240d": 94.2
     },
-    "variance_premium": 0.7961550196404303
+    "variance_premium": 0.9161550196404349
   }
 }
