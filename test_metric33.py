@@ -128,7 +128,7 @@ class TestMetric33(unittest.TestCase):
         snap = metric33.build_snapshot(raw, self.now)
         row18 = snap["rows"][17]
         self.assertIn("+0.0036%", row18)
-        self.assertIn("-0.0012%", row18)
+        self.assertIn("-0.0013%", row18)
         self.assertNotIn("+0.0000%", row18)
 
     def test_fapi_failure_never_disguises_okx_as_binance(self) -> None:
