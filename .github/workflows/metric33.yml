@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: metric33-snapshot
@@ -29,9 +29,12 @@ jobs:
 
       - name: Fetch 33 live metrics (Text + JSON)
         run: |
-          mkdir -p data
+          mkdir -p data docs
           python metric33.py | tee data/metric33_latest.txt
           python metric33.py --json > data/metric33_latest.json
+          # public copies — served by GitHub Pages from /docs
+          cp data/metric33_latest.json docs/metric33_latest.json
+          cp data/metric33_latest.txt  docs/metric33_latest.txt
           {
             echo "## Metric33 Live Snapshot"
             echo '```text'
@@ -47,3 +50,16 @@ jobs:
             data/metric33_latest.txt
             data/metric33_latest.json
           retention-days: 30
+
+      - name: Publish to GitHub Pages (commit back to master)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/metric33_latest.txt data/metric33_latest.json \
+                  docs/metric33_latest.txt docs/metric33_latest.json
+          if git diff --cached --quiet; then
+            echo "no change — nothing to publish"
+            exit 0
+          fi
+          git commit -m "data: metric33 snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
