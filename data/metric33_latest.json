@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-11-26T00:21:26Z",
-  "header": "BTC spot \u00b7 2026-11-26 00:21:26Z \u00b7 Metric33 standalone live snapshot",
+  "generated_at_utc": "2026-11-26T00:24:19Z",
+  "header": "BTC spot \u00b7 2026-11-26 00:24:19Z \u00b7 Metric33 standalone live snapshot",
   "rows": [
-    " 1  price, 3 venues  Binance 61024.8 \u00b7 Coinbase 60939.5 \u00b7 OKX 61028.8",
+    " 1  price, 3 venues  Binance 60950.0 \u00b7 Coinbase 60867.0 \u00b7 OKX 60951.3",
     " 2  closed 1D close  60458.01",
     " 3  bands containing price  60853-61664 (conf 17)",
     " 4  next levels  below 59849-60852 (conf 16) \u00b7 above 61665-62545 (conf 20)",
@@ -27,20 +27,20 @@
     "23  liq key levels  24H max pain above 61676 \u00b7 below 59736 \u00b7 1W magnet 56996 \u00b7 1M 57254 \u00b7 12.5% above",
     "24  CVD 30d  spot -1900 (BINANCE) \u00b7 futures -46729 BTC (OKX fallback)",
     "25  ETF netflow  1D $-234M \u00b7 5D $-1869M \u00b7 20D $-4759M",
-    "26  Coinbase premium  $-85.22 (-13.96 bps)",
-    "27  top traders  L/S 1.89 (65.4% long, accounts) (OKX fallback)",
+    "26  Coinbase premium  $-83.00 (-13.62 bps)",
+    "27  top traders  L/S 1.88 (65.3% long, accounts) (OKX fallback)",
     "28  realised vol 30d  47.54% \u00b7 81.6th pct of 1y",
-    "29  implied vol DVOL  49.57% (96.3th pct of 240d)",
-    "30  variance premium  +2.03 vol points",
+    "29  implied vol DVOL  49.68% (96.3th pct of 240d)",
+    "30  variance premium  +2.14 vol points",
     "31  last closed 4H bar  23:59Z  O 59879 H 60568 L 59795 C 60458 \u00b7 vol 2755 BTC",
     "32  taker buy ratio  50.11% of last closed 1D (net +58 BTC, BINANCE SPOT)",
-    "33  4H OI change  -763 BTC (-2.42%) \u00b7 24h +110 BTC (OKX fallback)"
+    "33  4H OI change  -719 BTC (-2.27%) \u00b7 24h +155 BTC (OKX fallback)"
   ],
   "metrics": {
     "price": {
-      "binance": 61024.76,
-      "coinbase": 60939.54,
-      "okx": 61028.8
+      "binance": 60950.0,
+      "coinbase": 60867.0,
+      "okx": 60951.3
     },
     "close_1d": 60458.01,
     "atr": {
@@ -79,9 +79,9 @@
       "percentile_1y": 81.6
     },
     "implied_dvol": {
-      "pct": 49.57,
+      "pct": 49.68,
       "percentile_240d": 96.3
     },
-    "variance_premium": 2.029386504468455
+    "variance_premium": 2.1393865044684546
   }
 }

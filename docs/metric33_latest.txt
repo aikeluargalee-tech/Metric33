@@ -1,6 +1,6 @@
-BTC spot · 2026-11-26 00:21:25Z · Metric33 standalone live snapshot
+BTC spot · 2026-11-26 00:24:18Z · Metric33 standalone live snapshot
 
- 1  price, 3 venues  Binance 61028.1 · Coinbase 60931.2 · OKX 61028.8
+ 1  price, 3 venues  Binance 60943.6 · Coinbase 60867.0 · OKX 60953.2
  2  closed 1D close  60458.01
  3  bands containing price  60853-61664 (conf 17)
  4  next levels  below 59849-60852 (conf 16) · above 61665-62545 (conf 20)
@@ -25,11 +25,11 @@ BTC spot · 2026-11-26 00:21:25Z · Metric33 standalone live snapshot
 23  liq key levels  24H max pain above 61676 · below 59736 · 1W magnet 56996 · 1M 57254 · 12.5% above
 24  CVD 30d  spot -1900 (BINANCE) · futures -46729 BTC (OKX fallback)
 25  ETF netflow  1D $-234M · 5D $-1869M · 20D $-4759M
-26  Coinbase premium  $-96.88 (-15.87 bps)
-27  top traders  L/S 1.89 (65.4% long, accounts) (OKX fallback)
+26  Coinbase premium  $-76.59 (-12.57 bps)
+27  top traders  L/S 1.88 (65.3% long, accounts) (OKX fallback)
 28  realised vol 30d  47.54% · 81.6th pct of 1y
-29  implied vol DVOL  49.57% (96.3th pct of 240d)
-30  variance premium  +2.03 vol points
+29  implied vol DVOL  49.68% (96.3th pct of 240d)
+30  variance premium  +2.14 vol points
 31  last closed 4H bar  23:59Z  O 59879 H 60568 L 59795 C 60458 · vol 2755 BTC
 32  taker buy ratio  50.11% of last closed 1D (net +58 BTC, BINANCE SPOT)
-33  4H OI change  -763 BTC (-2.42%) · 24h +110 BTC (OKX fallback)
+33  4H OI change  -719 BTC (-2.27%) · 24h +155 BTC (OKX fallback)
