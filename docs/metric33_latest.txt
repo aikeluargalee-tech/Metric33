@@ -1,35 +1,35 @@
-BTC spot · 2026-11-26 19:58:07Z · Metric33 standalone live snapshot
+BTC spot · 2026-11-27 02:43:46Z · Metric33 standalone live snapshot
 
- 1  price, 3 venues  Binance 60730.4 · Coinbase 60650.2 · OKX 60727.7
- 2  closed 1D close  60458.01
- 3  bands containing price  59849-60890 (conf 20)
- 4  next levels  below 58232-59304 (conf 10) · above 60891-61702 (conf 22)
- 5  ATR 1D/4H/1H  3064 · 1194 · 468
- 6  ATR 1D percentile  99.2th of 120d · 5.07% of price
+ 1  price, 3 venues  Binance 61519.7 · Coinbase 61441.0 · OKX 61522.5
+ 2  closed 1D close  60577.18
+ 3  bands containing price  60875-61702 (conf 23)
+ 4  next levels  below 59631-60669 (conf 20) · above 61703-62529 (conf 18)
+ 5  ATR 1D/4H/1H  2967 · 1108 · 383
+ 6  ATR 1D percentile  95.9th of 120d · 4.90% of price
  7  volume profile 30d  POCs 60274 / 75931
- 8  VWAP 30d  68526
- 9  sweeps  support sweep 59,850-60,890
-10  1D vs SMA200  72088 (-16.13%)
-11  price vs SMA30  70677 (-14.46%)  (proxy for short-term slope)
+ 8  VWAP 30d  68062
+ 9  sweeps  support sweep 59,631-60,670
+10  1D vs SMA200  71980 (-15.84%)
+11  price vs SMA30  69999 (-13.46%)  (proxy for short-term slope)
 12  4H structure  DOWNTREND (LH/LL)
 13  4H BOS  down false · up false
-14  ADX 1D / 4H  49.9 / 18.2
-15  RSI 14  1D 19.2 · 4H 51.8
-16  volume  last closed 1D $1.60B vs 9d SMA $1.66B (96%) · today-so-far $0.94B (partial)
+14  ADX 1D / 4H  49.8 / 16.2
+15  RSI 14  1D 22.2 · 4H 51.4
+16  volume  last closed 1D $1.00B vs 9d SMA $1.68B (60%) · today-so-far $0.16B (partial)
 17  funding 8h, Binance  UNAVAILABLE
-18  funding, market avg  +0.0069% (24h ago +0.0055%)
+18  funding, market avg  +0.0071% (24h ago +0.0067%)
 19  funding per venue  2 venues · lowest Deribit · highest OKX
 20  OI Binance  UNAVAILABLE
-21  OI BTC venues / all perps  BTC 1-venue $1.9B · all-crypto perps $262.3B (+0.99% 24h, CMC)
-22  liquidations 24h  $199.4M (longs $64.9M / 33% · shorts $134.5M · 24h -77.4%)
-23  liq key levels  24H max pain above 61599 · below 59675 · 1W magnet 59730 · 1M 68291 · 36.8% above
-24  CVD 30d  spot -1900 (BINANCE) · futures -43444 BTC (OKX fallback)
-25  ETF netflow  1D $-452M · 5D $-2015M · 20D $-5348M
-26  Coinbase premium  $-80.21 (-13.21 bps)
-27  top traders  L/S 1.77 (64.0% long, accounts) (OKX fallback)
-28  realised vol 30d  47.54% · 81.6th pct of 1y
-29  implied vol DVOL  52.06% (96.7th pct of 240d)
-30  variance premium  +4.52 vol points
-31  last closed 4H bar  15:59Z  O 60714 H 60989 L 59915 C 60619 · vol 2664 BTC
-32  taker buy ratio  50.11% of last closed 1D (net +58 BTC, BINANCE SPOT)
-33  4H OI change  +58 BTC (+0.18%) · 24h +449 BTC (OKX fallback)
+21  OI BTC venues / all perps  BTC 1-venue $2.0B · all-crypto perps $265.0B (-7.99% 24h, CMC)
+22  liquidations 24h  $184.8M (longs $66.3M / 36% · shorts $118.5M · 24h -80.5%)
+23  liq key levels  24H max pain above 62172 · below 59666 · 1W magnet 59730 · 1M 67866 · 31.0% above
+24  CVD 30d  spot -3417 (BINANCE) · futures -43444 BTC (OKX fallback)
+25  ETF netflow  1D $-452M · 5D $-1383M · 20D $-5361M
+26  Coinbase premium  $-78.67 (-12.79 bps)
+27  top traders  L/S 1.69 (62.9% long, accounts) (OKX fallback)
+28  realised vol 30d  47.24% · 79.2th pct of 1y
+29  implied vol DVOL  49.54% (95.9th pct of 240d)
+30  variance premium  +2.30 vol points
+31  last closed 4H bar  23:59Z  O 60719 H 61006 L 60391 C 60577 · vol 1073 BTC
+32  taker buy ratio  53.09% of last closed 1D (net +1018 BTC, BINANCE SPOT)
+33  4H OI change  +69 BTC (+0.22%) · 24h +591 BTC (OKX fallback)

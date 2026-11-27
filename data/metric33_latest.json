@@ -1,87 +1,87 @@
 {
-  "generated_at_utc": "2026-11-26T19:58:08Z",
-  "header": "BTC spot \u00b7 2026-11-26 19:58:08Z \u00b7 Metric33 standalone live snapshot",
+  "generated_at_utc": "2026-11-27T02:43:52Z",
+  "header": "BTC spot \u00b7 2026-11-27 02:43:52Z \u00b7 Metric33 standalone live snapshot",
   "rows": [
-    " 1  price, 3 venues  Binance 60730.4 \u00b7 Coinbase 60650.2 \u00b7 OKX 60727.7",
-    " 2  closed 1D close  60458.01",
-    " 3  bands containing price  59849-60890 (conf 20)",
-    " 4  next levels  below 58232-59304 (conf 10) \u00b7 above 60891-61702 (conf 22)",
-    " 5  ATR 1D/4H/1H  3064 \u00b7 1194 \u00b7 468",
-    " 6  ATR 1D percentile  99.2th of 120d \u00b7 5.07% of price",
+    " 1  price, 3 venues  Binance 61523.2 \u00b7 Coinbase 61446.1 \u00b7 OKX 61527.1",
+    " 2  closed 1D close  60577.18",
+    " 3  bands containing price  60875-61702 (conf 23)",
+    " 4  next levels  below 59631-60669 (conf 20) \u00b7 above 61703-62529 (conf 18)",
+    " 5  ATR 1D/4H/1H  2967 \u00b7 1108 \u00b7 383",
+    " 6  ATR 1D percentile  95.9th of 120d \u00b7 4.90% of price",
     " 7  volume profile 30d  POCs 60274 / 75931",
-    " 8  VWAP 30d  68526",
-    " 9  sweeps  support sweep 59,850-60,890",
-    "10  1D vs SMA200  72088 (-16.13%)",
-    "11  price vs SMA30  70677 (-14.46%)  (proxy for short-term slope)",
+    " 8  VWAP 30d  68062",
+    " 9  sweeps  support sweep 59,631-60,670",
+    "10  1D vs SMA200  71980 (-15.84%)",
+    "11  price vs SMA30  69999 (-13.46%)  (proxy for short-term slope)",
     "12  4H structure  DOWNTREND (LH/LL)",
     "13  4H BOS  down false \u00b7 up false",
-    "14  ADX 1D / 4H  49.9 / 18.2",
-    "15  RSI 14  1D 19.2 \u00b7 4H 51.8",
-    "16  volume  last closed 1D $1.60B vs 9d SMA $1.66B (96%) \u00b7 today-so-far $0.94B (partial)",
+    "14  ADX 1D / 4H  49.8 / 16.2",
+    "15  RSI 14  1D 22.2 \u00b7 4H 51.4",
+    "16  volume  last closed 1D $1.00B vs 9d SMA $1.68B (60%) \u00b7 today-so-far $0.16B (partial)",
     "17  funding 8h, Binance  UNAVAILABLE",
-    "18  funding, market avg  +0.0069% (24h ago +0.0055%)",
+    "18  funding, market avg  +0.0071% (24h ago +0.0067%)",
     "19  funding per venue  2 venues \u00b7 lowest Deribit \u00b7 highest OKX",
     "20  OI Binance  UNAVAILABLE",
-    "21  OI BTC venues / all perps  BTC 1-venue $1.9B \u00b7 all-crypto perps $262.3B (+0.99% 24h, CMC)",
-    "22  liquidations 24h  $199.4M (longs $64.9M / 33% \u00b7 shorts $134.5M \u00b7 24h -77.4%)",
-    "23  liq key levels  24H max pain above 61599 \u00b7 below 59675 \u00b7 1W magnet 59730 \u00b7 1M 68291 \u00b7 36.8% above",
-    "24  CVD 30d  spot -1900 (BINANCE) \u00b7 futures -43444 BTC (OKX fallback)",
-    "25  ETF netflow  1D $-452M \u00b7 5D $-2015M \u00b7 20D $-5348M",
-    "26  Coinbase premium  $-80.22 (-13.21 bps)",
-    "27  top traders  L/S 1.77 (64.0% long, accounts) (OKX fallback)",
-    "28  realised vol 30d  47.54% \u00b7 81.6th pct of 1y",
-    "29  implied vol DVOL  52.06% (96.7th pct of 240d)",
-    "30  variance premium  +4.52 vol points",
-    "31  last closed 4H bar  15:59Z  O 60714 H 60989 L 59915 C 60619 \u00b7 vol 2664 BTC",
-    "32  taker buy ratio  50.11% of last closed 1D (net +58 BTC, BINANCE SPOT)",
-    "33  4H OI change  +58 BTC (+0.18%) \u00b7 24h +449 BTC (OKX fallback)"
+    "21  OI BTC venues / all perps  BTC 1-venue $2.0B \u00b7 all-crypto perps $265.0B (-7.99% 24h, CMC)",
+    "22  liquidations 24h  $184.8M (longs $66.3M / 36% \u00b7 shorts $118.5M \u00b7 24h -80.5%)",
+    "23  liq key levels  24H max pain above 62172 \u00b7 below 59666 \u00b7 1W magnet 59730 \u00b7 1M 67866 \u00b7 31.0% above",
+    "24  CVD 30d  spot -3417 (BINANCE) \u00b7 futures -43444 BTC (OKX fallback)",
+    "25  ETF netflow  1D $-452M \u00b7 5D $-1383M \u00b7 20D $-5361M",
+    "26  Coinbase premium  $-77.06 (-12.53 bps)",
+    "27  top traders  L/S 1.69 (62.9% long, accounts) (OKX fallback)",
+    "28  realised vol 30d  47.24% \u00b7 79.2th pct of 1y",
+    "29  implied vol DVOL  49.54% (95.9th pct of 240d)",
+    "30  variance premium  +2.30 vol points",
+    "31  last closed 4H bar  23:59Z  O 60719 H 61006 L 60391 C 60577 \u00b7 vol 1073 BTC",
+    "32  taker buy ratio  53.09% of last closed 1D (net +1018 BTC, BINANCE SPOT)",
+    "33  4H OI change  +69 BTC (+0.22%) \u00b7 24h +591 BTC (OKX fallback)"
   ],
   "metrics": {
     "price": {
-      "binance": 60730.4,
-      "coinbase": 60650.18,
-      "okx": 60727.7
+      "binance": 61523.15,
+      "coinbase": 61446.09,
+      "okx": 61527.1
     },
-    "close_1d": 60458.01,
+    "close_1d": 60577.18,
     "atr": {
-      "1d": 3064.8040800132735,
-      "4h": 1194.9957121472519,
-      "1h": 468.9603096671044,
-      "1d_percentile_120d": 99.2
+      "1d": 2967.8452172154875,
+      "4h": 1108.3122722085996,
+      "1h": 383.73300973347347,
+      "1d_percentile_120d": 95.9
     },
     "pocs_30d": [
       60274.53,
       75931.77
     ],
-    "vwap_30d": 68526.71216549793,
-    "sweeps": "support sweep 59,850-60,890",
-    "sma200": 72088.27369999998,
-    "sma30": 70677.13466666666,
+    "vwap_30d": 68062.3015588597,
+    "sweeps": "support sweep 59,631-60,670",
+    "sma200": 71980.10924999996,
+    "sma30": 69999.38166666667,
     "structure_4h": "DOWNTREND (LH/LL)",
     "bos_4h": {
       "bos_down": false,
       "bos_up": false
     },
     "adx": {
-      "1d": 49.870754684530446,
-      "4h": 18.183587012112746
+      "1d": 49.82246286612331,
+      "4h": 16.17056228794699
     },
     "rsi14": {
-      "1d": 19.1593492088046,
-      "4h": 51.840526053641256
+      "1d": 22.157272692850455,
+      "4h": 51.35463578379409
     },
     "cvd_30d": {
-      "spot_btc": -1899.7748800000027,
+      "spot_btc": -3416.166650000003,
       "futures_btc": -43443.92840000002
     },
     "realised_vol_30d": {
-      "pct": 47.540613495531545,
-      "percentile_1y": 81.6
+      "pct": 47.239093337788404,
+      "percentile_1y": 79.2
     },
     "implied_dvol": {
-      "pct": 52.06,
-      "percentile_240d": 96.7
+      "pct": 49.54,
+      "percentile_240d": 95.9
     },
-    "variance_premium": 4.519386504468457
+    "variance_premium": 2.3009066622115952
   }
 }
