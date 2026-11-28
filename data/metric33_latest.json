@@ -1,52 +1,52 @@
 {
-  "generated_at_utc": "2026-11-28T03:04:17Z",
-  "header": "BTC spot \u00b7 2026-11-28 03:04:17Z \u00b7 Metric33 standalone live snapshot",
+  "generated_at_utc": "2026-11-28T12:42:01Z",
+  "header": "BTC spot \u00b7 2026-11-28 12:42:01Z \u00b7 Metric33 standalone live snapshot",
   "rows": [
-    " 1  price, 3 venues  Binance 59981.2 \u00b7 Coinbase 59904.5 \u00b7 OKX 59978.5",
+    " 1  price, 3 venues  Binance 59216.5 \u00b7 Coinbase 59160.0 \u00b7 OKX 59219.7",
     " 2  closed 1D close  59923.10",
-    " 3  bands containing price  59625-60675 (conf 20)",
-    " 4  next levels  below 58254-59305 (conf 13) \u00b7 above 60869-61732 (conf 23)",
-    " 5  ATR 1D/4H/1H  3002 \u00b7 1137 \u00b7 430",
+    " 3  bands containing price  58254-59305 (conf 14)",
+    " 4  next levels  below 56774-57825 (conf 4) \u00b7 above 59625-60675 (conf 21)",
+    " 5  ATR 1D/4H/1H  3002 \u00b7 1055 \u00b7 381",
     " 6  ATR 1D percentile  95.9th of 120d \u00b7 5.01% of price",
     " 7  volume profile 30d  POCs 60274 / 75931",
     " 8  VWAP 30d  67529",
     " 9  sweeps  resistance sweep 59,625-60,676",
     "10  1D vs SMA200  71870 (-16.62%)",
     "11  price vs SMA30  69285 (-13.51%)  (proxy for short-term slope)",
-    "12  4H structure  DOWNTREND (EMA50 falling, pivots uptrend)",
+    "12  4H structure  DOWNTREND (EMA50 falling, pivots expanding)",
     "13  4H BOS  down false \u00b7 up false",
-    "14  ADX 1D / 4H  50.0 / 16.4",
-    "15  RSI 14  1D 25.4 \u00b7 4H 44.7",
-    "16  volume  last closed 1D $1.28B vs 9d SMA $1.58B (81%) \u00b7 today-so-far $0.06B (partial)",
+    "14  ADX 1D / 4H  50.0 / 17.1",
+    "15  RSI 14  1D 25.4 \u00b7 4H 39.5",
+    "16  volume  last closed 1D $1.28B vs 9d SMA $1.58B (81%) \u00b7 today-so-far $0.34B (partial)",
     "17  funding 8h, Binance  UNAVAILABLE",
-    "18  funding, market avg  +0.0045% (24h ago +0.0071%)",
+    "18  funding, market avg  +0.0047% (24h ago +0.0044%)",
     "19  funding per venue  2 venues \u00b7 lowest Deribit \u00b7 highest OKX",
     "20  OI Binance  UNAVAILABLE",
-    "21  OI BTC venues / all perps  BTC 1-venue $1.9B \u00b7 all-crypto perps $252.7B (-3.04% 24h, CMC)",
-    "22  liquidations 24h  $381.0M (longs $271.0M / 71% \u00b7 shorts $110.0M \u00b7 24h +106.2%)",
-    "23  liq key levels  24H max pain above 60480 \u00b7 below 59680 \u00b7 1W magnet 64834 \u00b7 1M 64975 \u00b7 33.6% above",
+    "21  OI BTC venues / all perps  BTC 1-venue $1.9B \u00b7 all-crypto perps $250.4B (-3.89% 24h, CMC)",
+    "22  liquidations 24h  $383.8M (longs $313.4M / 82% \u00b7 shorts $70.4M \u00b7 24h +66.2%)",
+    "23  liq key levels  24H max pain above 59691 \u00b7 below 58797 \u00b7 1W magnet 64842 \u00b7 1M 64975 \u00b7 65.5% above",
     "24  CVD 30d  spot -5645 (BINANCE) \u00b7 futures -45102 BTC (OKX fallback)",
-    "25  ETF netflow  1D $-62M \u00b7 5D $-1318M \u00b7 20D $-4779M",
-    "26  Coinbase premium  $-76.77 (-12.80 bps)",
-    "27  top traders  L/S 2.07 (67.4% long, accounts) (OKX fallback)",
+    "25  ETF netflow  1D $-389M \u00b7 5D $-1645M \u00b7 20D $-5107M",
+    "26  Coinbase premium  $-56.45 (-9.53 bps)",
+    "27  top traders  L/S 2.06 (67.4% long, accounts) (OKX fallback)",
     "28  realised vol 30d  46.93% \u00b7 77.8th pct of 1y",
-    "29  implied vol DVOL  52.10% (97.1th pct of 240d)",
-    "30  variance premium  +5.17 vol points",
-    "31  last closed 4H bar  23:59Z  O 59910 H 59926 L 59580 C 59923 \u00b7 vol 1496 BTC",
+    "29  implied vol DVOL  53.25% (99.2th pct of 240d)",
+    "30  variance premium  +6.32 vol points",
+    "31  last closed 4H bar  11:59Z  O 59832 H 59862 L 59048 C 59238 \u00b7 vol 1917 BTC",
     "32  taker buy ratio  49.81% of last closed 1D (net -79 BTC, BINANCE SPOT)",
-    "33  4H OI change  +126 BTC (+0.39%) \u00b7 24h +6 BTC (OKX fallback)"
+    "33  4H OI change  -51 BTC (-0.16%) \u00b7 24h +310 BTC (OKX fallback)"
   ],
   "metrics": {
     "price": {
-      "binance": 59981.24,
-      "coinbase": 59904.47,
-      "okx": 59978.5
+      "binance": 59216.46,
+      "coinbase": 59160.01,
+      "okx": 59219.7
     },
     "close_1d": 59923.1,
     "atr": {
       "1d": 3002.7519874186037,
-      "4h": 1137.8151069756384,
-      "1h": 430.79227521132947,
+      "4h": 1055.3867347031628,
+      "1h": 381.43869590659597,
       "1d_percentile_120d": 95.9
     },
     "pocs_30d": [
@@ -57,18 +57,18 @@
     "sweeps": "resistance sweep 59,625-60,676",
     "sma200": 71870.99649999996,
     "sma30": 69285.36833333333,
-    "structure_4h": "DOWNTREND (EMA50 falling, pivots uptrend)",
+    "structure_4h": "DOWNTREND (EMA50 falling, pivots expanding)",
     "bos_4h": {
       "bos_down": false,
       "bos_up": false
     },
     "adx": {
       "1d": 49.98084909633065,
-      "4h": 16.39000361342179
+      "4h": 17.12938532137024
     },
     "rsi14": {
       "1d": 25.395362039379606,
-      "4h": 44.695031537608756
+      "4h": 39.53903612719466
     },
     "cvd_30d": {
       "spot_btc": -5644.951970000004,
@@ -79,9 +79,9 @@
       "percentile_1y": 77.8
     },
     "implied_dvol": {
-      "pct": 52.1,
-      "percentile_240d": 97.1
+      "pct": 53.25,
+      "percentile_240d": 99.2
     },
-    "variance_premium": 5.171118975886124
+    "variance_premium": 6.321118975886122
   }
 }
